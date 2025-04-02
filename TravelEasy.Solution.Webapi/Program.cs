@@ -19,7 +19,7 @@ builder.Services.AddScoped<IFlightService, FlightService>();
 builder.Services.AddScoped<IApiProxy, ApiProxy>();
 builder.Services.AddScoped<HttpClient, HttpClient>();
 
-var mapperConfiguration = new MapperConfiguration(mc => mc.AddProfile(new MapperProfile()));
+var mapperConfiguration = new MapperConfiguration(mc => mc.AddProfile(new DestinationsFromOriginMapperProfile()));
 var mapper = mapperConfiguration.CreateMapper();
 builder.Services.AddSingleton(mapper);
 

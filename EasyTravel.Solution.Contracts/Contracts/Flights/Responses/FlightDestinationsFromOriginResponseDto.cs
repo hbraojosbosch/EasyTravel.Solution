@@ -3,14 +3,14 @@ using EasyTravel.Solution.Contracts.Contracts.Flights.AmadeusModels;
 
 namespace EasyTravel.Solution.Contracts.Contracts.Flights.Responses
 {
-    public class FlightDestinationFromOriginResponseDto
+    public class FlightDestinationsFromOriginResponseDto
     {
-        public List<FlightDestinationDto> Data { get; set; }
+        public List<FlightDestinationsDto> Data { get; set; }
 
         public Dictionaries Dictionaries { get; set; }
     }
 
-    public class FlightDestinationDto
+    public class FlightDestinationsDto
     {
         public string Type { get; set; }
 
@@ -23,33 +23,33 @@ namespace EasyTravel.Solution.Contracts.Contracts.Flights.Responses
 
         public DateTime ReturnDate { get; set; }
 
-        public FlightDestinationFromOriginPriceDto Price { get; set; }
+        public FlightDestinationsFromOriginPriceDto Price { get; set; }
 
-        public FlightDestinationLinksDto Links { get; set; }
+        public FlightDestinationsLinksDto Links { get; set; }
     }
 
     public class Dictionaries
     {
         public Dictionary<string, string> Currencies { get; set; }
 
-        public Dictionary<string, FlightDestinationLocationDto> Locations { get; set; }
+        public Dictionary<string, FlightDestinationsLocationDto> Locations { get; set; }
     }
 
-    public class FlightDestinationLocationDto
+    public class FlightDestinationsLocationDto
     {
         public string SubType { get; set; }
 
         public string DetailedName { get; set; }
     }
 
-    public class FlightDestinationLinksDto
+    public class FlightDestinationsLinksDto
     {
         public string FlightDates { get; set; }
 
         public string FlightOffers { get; set; }
     }
 
-    public class FlightDestinationFromOriginPriceDto
+    public class FlightDestinationsFromOriginPriceDto
     {
         public string Total { get; set; }
     }

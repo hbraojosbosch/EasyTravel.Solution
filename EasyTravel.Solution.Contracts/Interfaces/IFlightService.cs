@@ -7,6 +7,6 @@ namespace EasyTravel.Solution.Contracts.Interfaces
     public interface IFlightService
     {
         Task<AmadeusFlightResponseDto> GetFlights(FlightRequestDto flightRequestDto);
-        Task<FlightDestinationFromOriginResponseDto> GetFlightsOffersFromOrigin(string origin, DateTime? departureDate, int? travelDays, decimal? maxPrice);
+        Task<FlightDestinationsFromOriginResponseDto> GetFlightsOffersFromOrigin(string origin, DateTime? departureDate, int? travelDays, decimal? maxPrice);
     }
 }

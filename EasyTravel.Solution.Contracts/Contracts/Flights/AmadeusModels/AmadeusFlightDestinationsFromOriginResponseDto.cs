@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace EasyTravel.Solution.Contracts.Contracts.Flights.AmadeusModels
 {
-    public class AmadeusFlightDestinationFromOriginResponseDto
+    public class AmadeusFlightDestinationsFromOriginResponseDto
     {
         [JsonPropertyName("data")]
-        public List<AmadeusFlightDestinationDto> Data { get; set; }
+        public List<AmadeusFlightDestinationsDto> Data { get; set; }
 
         [JsonPropertyName("dictionaries")]
         public AmadeusDictionaries Dictionaries { get; set; }
@@ -19,7 +19,7 @@ namespace EasyTravel.Solution.Contracts.Contracts.Flights.AmadeusModels
         public Meta Meta { get; set; }
     }
 
-    public class AmadeusFlightDestinationDto
+    public class AmadeusFlightDestinationsDto
     {
         [JsonPropertyName("type")]
         public string Type { get; set; }
@@ -37,19 +37,19 @@ namespace EasyTravel.Solution.Contracts.Contracts.Flights.AmadeusModels
         public DateTime ReturnDate { get; set; }
 
         [JsonPropertyName("price")]
-        public AmadeusFlightDestinationPriceDto Price { get; set; }
+        public AmadeusFlightDestinationsPriceDto Price { get; set; }
 
         [JsonPropertyName("links")]
-        public AmadeusFlightDestinationLinksDto Links { get; set; }
+        public AmadeusFlightDestinationsLinksDto Links { get; set; }
     }
 
-    public class AmadeusFlightDestinationPriceDto
+    public class AmadeusFlightDestinationsPriceDto
     {
         [JsonPropertyName("total")]
         public string Total { get; set; }
     }
 
-    public class AmadeusFlightDestinationLinksDto
+    public class AmadeusFlightDestinationsLinksDto
     {
         [JsonPropertyName("flightDates")]
         public string FlightDates { get; set; }
@@ -64,10 +64,10 @@ namespace EasyTravel.Solution.Contracts.Contracts.Flights.AmadeusModels
         public Dictionary<string, string> Currencies { get; set; }
 
         [JsonPropertyName("locations")]
-        public Dictionary<string, AmadeusFlightDestinationLocationDto> Locations { get; set; }
+        public Dictionary<string, AmadeusFlightDestinationsLocationDto> Locations { get; set; }
     }
 
-    public class AmadeusFlightDestinationLocationDto
+    public class AmadeusFlightDestinationsLocationDto
     {
         [JsonPropertyName("subType")]
         public string SubType { get; set; }

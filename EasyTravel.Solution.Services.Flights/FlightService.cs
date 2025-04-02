@@ -48,7 +48,7 @@ namespace EasyTravel.Solution.Services
             }
         }
 
-        public async Task<FlightDestinationFromOriginResponseDto> GetFlightsOffersFromOrigin(string origin, DateTime? departureDate, int? travelDays, decimal? maxPrice)
+        public async Task<FlightDestinationsFromOriginResponseDto> GetFlightsOffersFromOrigin(string origin, DateTime? departureDate, int? travelDays, decimal? maxPrice)
         {
             var token = await _authenticationService.GetTokenAsync("ckUD88UAsGlU5o2J6EFT3zhnMFN0OfKa", "if5MXVly3Fp4Tqfx");
             var departureDateStr = departureDate != null ? departureDate.Value.ToString("yyyy-MM-dd") : "";
@@ -66,14 +66,14 @@ namespace EasyTravel.Solution.Services
             string apiUrl = "https://test.api.amadeus.com/v1/shopping/flight-destinations";
 
             var jsonResponse = await _apiProxy.GetAsync(apiUrl, token.AccessToken, queryParams);
-            var result = new FlightDestinationFromOriginResponseDto { };
+            var result = new FlightDestinationsFromOriginResponseDto { };
             try
             {
                 if (!string.IsNullOrWhiteSpace(jsonResponse))
                 {
-                    var deserializedReponse = JsonSerializer.Deserialize<AmadeusFlightDestinationFromOriginResponseDto>(jsonResponse, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                    var deserializedReponse = JsonSerializer.Deserialize<AmadeusFlightDestinationsFromOriginResponseDto>(jsonResponse, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
                     if (deserializedReponse != null)
-                        result = _mapper.Map<FlightDestinationFromOriginResponseDto>(deserializedReponse);
+                        result = _mapper.Map<FlightDestinationsFromOriginResponseDto>(deserializedReponse);
                 }
             }
             catch (Exception ex)
