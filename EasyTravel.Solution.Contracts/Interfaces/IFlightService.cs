@@ -1,0 +1,12 @@
+﻿using EasyTravel.Solution.Contracts.Contracts.Flights.AmadeusModels;
+using EasyTravel.Solution.Contracts.Contracts.Flights.Requests;
+using EasyTravel.Solution.Contracts.Contracts.Flights.Responses;
+
+namespace EasyTravel.Solution.Contracts.Interfaces
+{
+    public interface IFlightService
+    {
+        Task<AmadeusFlightResponseDto> GetFlights(FlightRequestDto flightRequestDto);
+        Task<FlightDestinationFromOriginResponseDto> GetFlightsOffersFromOrigin(string origin, DateTime? departureDate, int? travelDays, decimal? maxPrice);
+    }
+}
