@@ -15,7 +15,6 @@ namespace EasyTravel.Solution.Services
         private readonly IApiProxy _apiProxy;
         private readonly IMapper _mapper;
 
-
         public FlightService(IAuthenticationService authenticationService, IApiProxy apiProxy, IMapper mapper)
         {
             _authenticationService = authenticationService;
@@ -23,23 +22,23 @@ namespace EasyTravel.Solution.Services
             _mapper = mapper;
         }
 
-        public async Task<AmadeusFlightResponseDto> GetFlights(FlightRequestDto flightRequestDto)
+        public async Task<FlightOfferResponseDto> GetFlights(FlightRequestDto flightRequestDto)
         {
             try
             {
                 var token = await _authenticationService.GetTokenAsync("ckUD88UAsGlU5o2J6EFT3zhnMFN0OfKa", "if5MXVly3Fp4Tqfx");
                 var request = GetFlightSearchRequest(flightRequestDto);
                 var jsonResponse = await _apiProxy.PostAsync("https://test.api.amadeus.com/v2/shopping/flight-offers", token.AccessToken, request);
-
+                var result = new FlightOfferResponseDto { };
                 if (!string.IsNullOrWhiteSpace(jsonResponse))
                 {
-                    var deserializedReponse = JsonSerializer.Deserialize<AmadeusFlightResponseDto>(jsonResponse,
+                    var deserializedReponse = JsonSerializer.Deserialize<AmadeusFlightOfferResponseDto>(jsonResponse,
                                         new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-
-                    return deserializedReponse;
+                    if (deserializedReponse != null)
+                        result = _mapper.Map<FlightOfferResponseDto>(deserializedReponse);
                 }
 
-                return null;
+                return result;
             }
             catch (Exception ex)
             {
@@ -78,25 +77,11 @@ namespace EasyTravel.Solution.Services
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex);
                 throw;
             }
 
             return result;
-        }
-
-        private List<FlightOffersFromOriginDto>? MapAmadeusFlightSestinationResponse(List<AmadeusFlightResponseDto>? flightOffers)
-        {
-            if (flightOffers == null || flightOffers.Count == 0)
-                return null;
-            var result = new List<FlightOffersFromOriginDto>();
-            foreach (var flightOffer in flightOffers)
-            {
-                result.Add(new FlightOffersFromOriginDto
-                {
-
-                });
-            }
-            throw new NotImplementedException();
         }
 
         private static AmadeusFlightSearchRequestDto GetFlightSearchRequest(FlightRequestDto flightRequestDto)

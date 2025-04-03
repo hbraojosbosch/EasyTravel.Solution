@@ -5,7 +5,7 @@ namespace EasyTravel.Solution.Contracts.Contracts.Flights.AmadeusModels
     using System.Collections.Generic;
     using System.Text.Json.Serialization;
 
-    public class MetaDto
+    public class AmadeusFlightOfferMetaDto
     {
         [JsonPropertyName("count")]
         public int Count { get; set; }
@@ -110,13 +110,13 @@ namespace EasyTravel.Solution.Contracts.Contracts.Flights.AmadeusModels
         public bool IncludedCheckedBagsOnly { get; set; }
     }
 
-    public class IncludedCheckedBagsDto
+    public class AmadeusIncludedCheckedBagsDto
     {
         [JsonPropertyName("quantity")]
         public int Quantity { get; set; }
     }
 
-    public class FareDetailsBySegmentDto
+    public class AmadeusFareDetailsBySegmentDto
     {
         [JsonPropertyName("segmentId")]
         public string SegmentId { get; set; }
@@ -131,10 +131,10 @@ namespace EasyTravel.Solution.Contracts.Contracts.Flights.AmadeusModels
         public string Class { get; set; }
 
         [JsonPropertyName("includedCheckedBags")]
-        public IncludedCheckedBagsDto IncludedCheckedBags { get; set; }
+        public AmadeusIncludedCheckedBagsDto IncludedCheckedBags { get; set; }
     }
 
-    public class TravelerPricingDto
+    public class AmadeusTravelerPricingDto
     {
         [JsonPropertyName("travelerId")]
         public string TravelerId { get; set; }
@@ -149,7 +149,7 @@ namespace EasyTravel.Solution.Contracts.Contracts.Flights.AmadeusModels
         public AmadeusPriceDto Price { get; set; }
 
         [JsonPropertyName("fareDetailsBySegment")]
-        public List<FareDetailsBySegmentDto> FareDetailsBySegment { get; set; }
+        public List<AmadeusFareDetailsBySegmentDto> FareDetailsBySegment { get; set; }
     }
 
     public class AmadeusFlightOfferDto
@@ -191,7 +191,7 @@ namespace EasyTravel.Solution.Contracts.Contracts.Flights.AmadeusModels
         public List<string> ValidatingAirlineCodes { get; set; }
 
         [JsonPropertyName("travelerPricings")]
-        public List<TravelerPricingDto> TravelerPricings { get; set; }
+        public List<AmadeusTravelerPricingDto> TravelerPricings { get; set; }
     }
 
     public class AmadeusLocationDto
@@ -201,7 +201,7 @@ namespace EasyTravel.Solution.Contracts.Contracts.Flights.AmadeusModels
         public string CountryCode { get; set; }
     }
 
-    public class DictionariesDto
+    public class AmadeusDictionariesDto
     {
         [JsonPropertyName("locations")]
         public Dictionary<string, AmadeusLocationDto> Locations { get; set; }
@@ -216,16 +216,16 @@ namespace EasyTravel.Solution.Contracts.Contracts.Flights.AmadeusModels
         public Dictionary<string, string> Carriers { get; set; }
     }
 
-    public class AmadeusFlightResponseDto
+    public class AmadeusFlightOfferResponseDto
     {
         [JsonPropertyName("meta")]
-        public MetaDto Meta { get; set; }
+        public AmadeusFlightOfferMetaDto Meta { get; set; }
 
         [JsonPropertyName("data")]
         public List<AmadeusFlightOfferDto> Data { get; set; }
 
         [JsonPropertyName("dictionaries")]
-        public DictionariesDto Dictionaries { get; set; }
+        public AmadeusDictionariesDto Dictionaries { get; set; }
     }
 
 }

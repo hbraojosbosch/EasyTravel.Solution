@@ -2,7 +2,7 @@
 using EasyTravel.Solution.Contracts.Contracts.Flights.AmadeusModels;
 using EasyTravel.Solution.Contracts.Contracts.Flights.Responses;
 
-namespace EasyTravel.Solution.ThirdPartyConnections
+namespace EasyTravel.Solution.ThirdPartyConnections.MappingProfiles
 {
     public class DestinationsFromOriginMapperProfile : Profile
     {
@@ -13,7 +13,7 @@ namespace EasyTravel.Solution.ThirdPartyConnections
             CreateMap<AmadeusFlightDestinationsPriceDto, FlightDestinationsFromOriginPriceDto>();
             CreateMap<AmadeusFlightDestinationsLinksDto, FlightDestinationsLinksDto>();
             CreateMap<AmadeusFlightDestinationsLocationDto, FlightDestinationsLocationDto>();
-            CreateMap<AmadeusDictionaries, Dictionaries>();                   
+            CreateMap<AmadeusDictionaries, Dictionaries>();
         }
     }
 }

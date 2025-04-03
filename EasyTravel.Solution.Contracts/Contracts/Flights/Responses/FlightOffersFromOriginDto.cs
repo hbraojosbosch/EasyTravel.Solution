@@ -30,7 +30,7 @@ namespace EasyTravel.Solution.Contracts.Contracts.Flights.Responses
 
         public List<string> ValidatingAirlineCodes { get; set; }
 
-        public List<TravelerPricingDto> TravelerPricings { get; set; }
+        public List<AmadeusTravelerPricingDto> TravelerPricings { get; set; }
     }
 
     public class PriceDto
@@ -86,7 +86,6 @@ namespace EasyTravel.Solution.Contracts.Contracts.Flights.Responses
     }
     public class AircraftDto
     {
-        [JsonPropertyName("code")]
         public string Code { get; set; }
     }
 

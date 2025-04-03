@@ -3,6 +3,7 @@ using EasyTravel.Solution.Contracts.Interfaces;
 using EasyTravel.Solution.Services;
 using EasyTravel.Solution.ThirdPartyConnections;
 using EasyTravel.Solution.ThirdPartyConnections.Contracts;
+using EasyTravel.Solution.ThirdPartyConnections.MappingProfiles;
 using EasyTravel.Solution.ThirdPartyConnections.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,7 +20,11 @@ builder.Services.AddScoped<IFlightService, FlightService>();
 builder.Services.AddScoped<IApiProxy, ApiProxy>();
 builder.Services.AddScoped<HttpClient, HttpClient>();
 
-var mapperConfiguration = new MapperConfiguration(mc => mc.AddProfile(new DestinationsFromOriginMapperProfile()));
+var mapperConfiguration = new MapperConfiguration(mc =>
+{
+    mc.AddProfile(new DestinationsFromOriginMapperProfile());
+    mc.AddProfile(new FlightOfferMapperProfile());
+});
 var mapper = mapperConfiguration.CreateMapper();
 builder.Services.AddSingleton(mapper);
 
@@ -33,7 +38,7 @@ if (app.Environment.IsDevelopment())
 }
 
 
- 
+
 
 app.UseHttpsRedirection();
 
