@@ -21,7 +21,6 @@ namespace EasyTravel.Solution.Services
             _apiProxy = apiProxy;
             _mapper = mapper;
         }
-
         public async Task<FlightOfferResponseDto> GetFlights(FlightRequestDto flightRequestDto)
         {
             try
@@ -46,7 +45,6 @@ namespace EasyTravel.Solution.Services
                 throw;
             }
         }
-
         public async Task<FlightDestinationsFromOriginResponseDto> GetFlightsOffersFromOrigin(string origin, DateTime? departureDate, int? travelDays, decimal? maxPrice)
         {
             var token = await _authenticationService.GetTokenAsync("ckUD88UAsGlU5o2J6EFT3zhnMFN0OfKa", "if5MXVly3Fp4Tqfx");
@@ -83,7 +81,6 @@ namespace EasyTravel.Solution.Services
 
             return result;
         }
-
         private static AmadeusFlightSearchRequestDto GetFlightSearchRequest(FlightRequestDto flightRequestDto)
         {
             return new AmadeusFlightSearchRequestDto

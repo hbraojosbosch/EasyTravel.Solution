@@ -26,7 +26,7 @@ namespace EasyTravel.Solution.ThirdPartyConnections.MappingProfiles
             CreateMap<AmadeusTravelerPricingDto, FlightOfferTravelerPricingDto>();
             CreateMap<AmadeusFareDetailsBySegmentDto, FlightOfferFareDetailsBySegmentDto>();
             CreateMap<AmadeusIncludedCheckedBagsDto, FlightOfferIncludedCheckedBagsDto>();
-            CreateMap<AmadeusLocationDto, FlightOfferLocationDto>();
+            CreateMap<AmadeusLocationCodesDto, FlightOfferLocationDto>();
         }
     }
 }

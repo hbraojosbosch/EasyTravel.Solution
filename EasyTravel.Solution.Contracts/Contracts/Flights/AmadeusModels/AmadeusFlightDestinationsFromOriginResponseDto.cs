@@ -76,7 +76,7 @@ namespace EasyTravel.Solution.Contracts.Contracts.Flights.AmadeusModels
         public string DetailedName { get; set; }
     }
 
-    public class Meta
+    public class AmadeusFlightDestinationsMeta
     {
         [JsonPropertyName("currency")]
         public string Currency { get; set; }
@@ -86,12 +86,6 @@ namespace EasyTravel.Solution.Contracts.Contracts.Flights.AmadeusModels
 
         [JsonPropertyName("defaults")]
         public MetaDefaults Defaults { get; set; }
-    }
-
-    public class MetaLinks
-    {
-        [JsonPropertyName("self")]
-        public string Self { get; set; }
     }
 
     public class MetaDefaults

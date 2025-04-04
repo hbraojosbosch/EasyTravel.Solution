@@ -194,7 +194,7 @@ namespace EasyTravel.Solution.Contracts.Contracts.Flights.AmadeusModels
         public List<AmadeusTravelerPricingDto> TravelerPricings { get; set; }
     }
 
-    public class AmadeusLocationDto
+    public class AmadeusLocationCodesDto
     {
         public string CityCode { get; set; }
 
@@ -204,7 +204,7 @@ namespace EasyTravel.Solution.Contracts.Contracts.Flights.AmadeusModels
     public class AmadeusDictionariesDto
     {
         [JsonPropertyName("locations")]
-        public Dictionary<string, AmadeusLocationDto> Locations { get; set; }
+        public Dictionary<string, AmadeusLocationCodesDto> Locations { get; set; }
 
         [JsonPropertyName("aircraft")]
         public Dictionary<string, string> Aircraft { get; set; }
