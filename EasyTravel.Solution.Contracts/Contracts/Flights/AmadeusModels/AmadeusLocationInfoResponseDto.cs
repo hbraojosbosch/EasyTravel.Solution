@@ -10,7 +10,7 @@ namespace EasyTravel.Solution.Contracts.Contracts.Flights.AmadeusModels
     using System.Collections.Generic;
     using System.Text.Json.Serialization;
 
-    public class AmadeusLocationInfoDto
+    public class AmadeusLocationInfoResponseDto
     {
         [JsonPropertyName("meta")]
         public Meta Meta { get; set; }

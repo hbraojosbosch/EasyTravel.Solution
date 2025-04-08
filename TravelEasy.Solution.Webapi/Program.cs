@@ -1,10 +1,11 @@
 using AutoMapper;
+using EasyTravel.Solution.Cache.Services;
 using EasyTravel.Solution.Contracts.Interfaces;
 using EasyTravel.Solution.Services;
-using EasyTravel.Solution.ThirdPartyConnections;
 using EasyTravel.Solution.ThirdPartyConnections.Contracts;
 using EasyTravel.Solution.ThirdPartyConnections.MappingProfiles;
 using EasyTravel.Solution.ThirdPartyConnections.Services;
+using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddScoped<IFlightService, FlightService>();
 builder.Services.AddScoped<IApiProxy, ApiProxy>();
+builder.Services.AddScoped<IAirportsAndCityService, AirportsAndCityService>();
 builder.Services.AddScoped<HttpClient, HttpClient>();
 
 var mapperConfiguration = new MapperConfiguration(mc =>
@@ -27,6 +29,14 @@ var mapperConfiguration = new MapperConfiguration(mc =>
 });
 var mapper = mapperConfiguration.CreateMapper();
 builder.Services.AddSingleton(mapper);
+
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = "localhost:6379";
+    options.InstanceName = "redis-server:";
+});
+builder.Services.AddScoped<ICacheService, RedisService>();
+
 
 var app = builder.Build();
 

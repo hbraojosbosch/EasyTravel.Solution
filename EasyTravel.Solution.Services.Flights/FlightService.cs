@@ -14,18 +14,22 @@ namespace EasyTravel.Solution.Services
         private IAuthenticationService _authenticationService;
         private readonly IApiProxy _apiProxy;
         private readonly IMapper _mapper;
+        private readonly IAirportsAndCityService _airportsAndCityService;
 
-        public FlightService(IAuthenticationService authenticationService, IApiProxy apiProxy, IMapper mapper)
+        public FlightService(IAuthenticationService authenticationService, IApiProxy apiProxy, IMapper mapper, IAirportsAndCityService airportsAndCityService)
         {
             _authenticationService = authenticationService;
             _apiProxy = apiProxy;
             _mapper = mapper;
+            _airportsAndCityService = airportsAndCityService;
         }
+        
         public async Task<FlightOfferResponseDto> GetFlights(FlightRequestDto flightRequestDto)
         {
             try
             {
                 var token = await _authenticationService.GetTokenAsync("ckUD88UAsGlU5o2J6EFT3zhnMFN0OfKa", "if5MXVly3Fp4Tqfx");
+                await _airportsAndCityService.GetLocationsAsync();
                 var request = GetFlightSearchRequest(flightRequestDto);
                 var jsonResponse = await _apiProxy.PostAsync("https://test.api.amadeus.com/v2/shopping/flight-offers", token.AccessToken, request);
                 var result = new FlightOfferResponseDto { };
@@ -45,6 +49,7 @@ namespace EasyTravel.Solution.Services
                 throw;
             }
         }
+        
         public async Task<FlightDestinationsFromOriginResponseDto> GetFlightsOffersFromOrigin(string origin, DateTime? departureDate, int? travelDays, decimal? maxPrice)
         {
             var token = await _authenticationService.GetTokenAsync("ckUD88UAsGlU5o2J6EFT3zhnMFN0OfKa", "if5MXVly3Fp4Tqfx");
@@ -81,6 +86,7 @@ namespace EasyTravel.Solution.Services
 
             return result;
         }
+        
         private static AmadeusFlightSearchRequestDto GetFlightSearchRequest(FlightRequestDto flightRequestDto)
         {
             return new AmadeusFlightSearchRequestDto

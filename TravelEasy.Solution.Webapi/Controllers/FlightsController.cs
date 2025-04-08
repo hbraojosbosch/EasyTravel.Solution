@@ -1,4 +1,5 @@
 using EasyTravel.Solution.Contracts.Contracts.Flights.Requests;
+using EasyTravel.Solution.Contracts.Contracts.Flights.Responses;
 using EasyTravel.Solution.Contracts.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,6 +20,7 @@ namespace TravelEasy.Solution.Webapi.Controllers
         }
 
         [HttpPost("get-flights")]
+        [ProducesResponseType(typeof(FlightOfferResponseDto), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetGlights(FlightRequestDto flightRequestDto)
         {
             var response = await _flightService.GetFlights(flightRequestDto);
@@ -29,10 +31,11 @@ namespace TravelEasy.Solution.Webapi.Controllers
         }
 
         [HttpGet("get-fights-offers-from-origin")]
+        [ProducesResponseType(typeof(List<FlightDestinationsFromOriginResponseDto>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetFlightsOffersFromArigin([FromQuery] string origin, [FromQuery] DateTime? departureDate,
-                                                                                [FromQuery] int? travelTotlaDays, [FromQuery] decimal? maxPrice)
+                                                                                [FromQuery] int? travelTotalDays, [FromQuery] decimal? maxPrice)
         {
-            var response = await _flightService.GetFlightsOffersFromOrigin(origin, departureDate, travelTotlaDays, maxPrice);
+            var response = await _flightService.GetFlightsOffersFromOrigin(origin, departureDate, travelTotalDays, maxPrice);
 
             return Ok(response);
         }

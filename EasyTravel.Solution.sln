@@ -11,7 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02 Services", "02 Services"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03 Contracts", "03 Contracts", "{6C8944D0-F21D-4C8F-93E2-AB8FFD54208F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyTravel.Solution.Services", "EasyTravel.Solution.Services.Flights\EasyTravel.Solution.Services.csproj", "{E3B367E0-DFD4-45E1-86EE-9F5714F7B361}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyTravel.Solution.AmadeusConections.Services", "EasyTravel.Solution.Services.Flights\EasyTravel.Solution.AmadeusConections.Services.csproj", "{E3B367E0-DFD4-45E1-86EE-9F5714F7B361}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyTravel.Solution.Contracts", "EasyTravel.Solution.Contracts\EasyTravel.Solution.Contracts.csproj", "{D0E826AE-19AF-4252-999E-77A7E2E57BE4}"
 EndProject
@@ -20,6 +20,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "06 Cross", "06 Cross", "{30A6111F-FD52-489E-81C9-E8877DD300E5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyTravel.Solution.ThirdPartyConnections", "EasyTravel.Solution.ThirdPartyConnections\EasyTravel.Solution.ThirdPartyConnections.csproj", "{B8FDFCFE-B0D9-4B5F-80D6-D67EECB94829}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyTravel.Solution.Cache.Services", "EasyTravel.Solution.Cache.Services\EasyTravel.Solution.Cache.Services.csproj", "{66C638D1-C007-48F7-A305-1A956C845EF5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +45,10 @@ Global
 		{B8FDFCFE-B0D9-4B5F-80D6-D67EECB94829}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B8FDFCFE-B0D9-4B5F-80D6-D67EECB94829}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B8FDFCFE-B0D9-4B5F-80D6-D67EECB94829}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66C638D1-C007-48F7-A305-1A956C845EF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66C638D1-C007-48F7-A305-1A956C845EF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66C638D1-C007-48F7-A305-1A956C845EF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66C638D1-C007-48F7-A305-1A956C845EF5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -52,5 +58,6 @@ Global
 		{E3B367E0-DFD4-45E1-86EE-9F5714F7B361} = {22354DD8-784F-4F39-BC0E-742BDDAF4A24}
 		{D0E826AE-19AF-4252-999E-77A7E2E57BE4} = {6C8944D0-F21D-4C8F-93E2-AB8FFD54208F}
 		{B8FDFCFE-B0D9-4B5F-80D6-D67EECB94829} = {30A6111F-FD52-489E-81C9-E8877DD300E5}
+		{66C638D1-C007-48F7-A305-1A956C845EF5} = {22354DD8-784F-4F39-BC0E-742BDDAF4A24}
 	EndGlobalSection
 EndGlobal

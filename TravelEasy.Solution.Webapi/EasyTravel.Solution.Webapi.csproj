@@ -8,12 +8,16 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="14.0.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="10.0.0-preview.2.25163.2" />
+    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="9.0.2" />
+    <PackageReference Include="StackExchange.Redis" Version="2.8.31" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="8.1.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\EasyTravel.Solution.Cache.Services\EasyTravel.Solution.Cache.Services.csproj" />
     <ProjectReference Include="..\EasyTravel.Solution.Contracts\EasyTravel.Solution.Contracts.csproj" />
-    <ProjectReference Include="..\EasyTravel.Solution.Services.Flights\EasyTravel.Solution.Services.csproj" />
+    <ProjectReference Include="..\EasyTravel.Solution.Services.Flights\EasyTravel.Solution.AmadeusConections.Services.csproj" />
   </ItemGroup>
 
 </Project>
