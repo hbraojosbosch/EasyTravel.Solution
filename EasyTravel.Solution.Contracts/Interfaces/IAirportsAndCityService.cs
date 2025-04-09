@@ -10,7 +10,8 @@ namespace EasyTravel.Solution.Contracts.Interfaces
 {
     public interface IAirportsAndCityService
     {
-        Task<List<AmadeusLocationInfoResponseDto>> GetLocationsAsync();
-        Task<AmadeusLocationInfoResponseDto> GetLocations(string keyword, string accessToken);
+        Task<List<AmadeusLocationInfoResponseDto>> GetLocationsAsync(string token);
+        Task<List<AmadeusLocationInfoResponseDto>> GetLocationsAsync(List<string> Cities, string token);
+        Task SetLocationToMemoryCacheAsync();
     }
 }

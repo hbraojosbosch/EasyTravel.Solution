@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
@@ -30,37 +32,65 @@ namespace EasyTravel.Solution.Services
             _cacheService = cacheService;
         }
 
-        public async Task<List<AmadeusLocationInfoResponseDto>> GetLocationsAsync()
+        public async Task<List<AmadeusLocationInfoResponseDto>> GetLocationsAsync(string token)
         {
             List<AmadeusLocationInfoResponseDto> allLocations = new();
-            var token = await _authenticationService.GetTokenAsync("ckUD88UAsGlU5o2J6EFT3zhnMFN0OfKa", "if5MXVly3Fp4Tqfx");
-            foreach (char letter in "AB"/*CDEFGHIJKLMNOPQRSTUVWXYZ"*/)
+            foreach (char letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ")
             {
-                Console.WriteLine($"Fetching locations for: {letter}");
-                var locations = await GetLocations(letter.ToString(), token.AccessToken);
-                allLocations.Add(locations);
-                await Task.Delay(1000); // Avoid rate limits
+                int limit = 100;
+                int offset = 0;
+                bool moreData = true;
+                while (moreData)
+                {
+
+                    var locations = await GetLocations(letter.ToString(), token, limit, offset);
+
+                    if (locations?.Data?.Any() != true)
+                    {
+                        moreData = false;
+                        break;
+                    }
+                    allLocations.Add(locations);
+
+                    offset += limit;
+                    await Task.Delay(100); // Avoid rate limits
+                }
+
             }
 
-            var serializedLocations = JsonSerializer.Serialize(allLocations);
-            await _cacheService.SetValueAsync("AmadeusLocations", serializedLocations);
             var cachedValues = await _cacheService.GetValueAsync("AmadeusLocations");
             return allLocations;
         }
 
-        public async Task<AmadeusLocationInfoResponseDto> GetLocations(string keyword, string accessToken)
+        public async Task SetLocationToMemoryCacheAsync()
         {
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+            var token = await _authenticationService.GetTokenAsync("ckUD88UAsGlU5o2J6EFT3zhnMFN0OfKa", "if5MXVly3Fp4Tqfx");
+            if (token != null)
+            {
+                var serializedLocations = JsonSerializer.Serialize(allLocations);
+                await _cacheService.SetValueAsync("AmadeusLocations", serializedLocations);
+            }
+        }
+
+        private async Task<AmadeusLocationInfoResponseDto> GetLocations(string keyword, string token, int limit, int offset)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
             string url = $"https://test.api.amadeus.com/v1/reference-data/locations?subType=CITY,AIRPORT&keyword={keyword}";
-            var response = await _httpClient.GetAsync(url);
-            if (!response.IsSuccessStatusCode) 
+            string url1 = $"https://test.api.amadeus.com/v1/reference-data/locations?subType=AIRPORT&keyword={keyword}&page[limit]={limit}&page[offset]={offset}";
+            var response = await _httpClient.GetAsync(url1);
+            if (!response.IsSuccessStatusCode)
                 return new AmadeusLocationInfoResponseDto();
 
             var responseBody = await response.Content.ReadAsStringAsync();
             var deserializedResponse = JsonSerializer.Deserialize<AmadeusLocationInfoResponseDto>(responseBody);
 
             return deserializedResponse ?? new AmadeusLocationInfoResponseDto { };
+        }
+
+        public Task<List<AmadeusLocationInfoResponseDto>> GetLocationsAsync(List<string> Cities, string token)
+        {
+            throw new NotImplementedException();
         }
     }
 }

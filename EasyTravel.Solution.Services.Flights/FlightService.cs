@@ -29,7 +29,7 @@ namespace EasyTravel.Solution.Services
             try
             {
                 var token = await _authenticationService.GetTokenAsync("ckUD88UAsGlU5o2J6EFT3zhnMFN0OfKa", "if5MXVly3Fp4Tqfx");
-                await _airportsAndCityService.GetLocationsAsync();
+                await _airportsAndCityService.GetLocationsAsync(token.AccessToken);
                 var request = GetFlightSearchRequest(flightRequestDto);
                 var jsonResponse = await _apiProxy.PostAsync("https://test.api.amadeus.com/v2/shopping/flight-offers", token.AccessToken, request);
                 var result = new FlightOfferResponseDto { };
