@@ -34,16 +34,17 @@ namespace EasyTravel.Solution.AirportsAndCities.Worker
                 var delay = nextRun - DateTimeOffset.UtcNow;
 
                 _logger.LogInformation("Next run scheduled at: {NextRun}", nextRun);
+                
                 await Task.Delay(delay, stoppingToken);
             }
         }
         private DateTimeOffset GetNextRunTime()
         {
             var now = DateTimeOffset.UtcNow;
-            var next = now.Date.AddMinutes(3);  
+            var next = now.AddMinutes(1);  
             if (next <= now)
             {
-                next = next.AddMinutes(3);
+                next = now.AddMinutes(1);
             }
             return next;
         }

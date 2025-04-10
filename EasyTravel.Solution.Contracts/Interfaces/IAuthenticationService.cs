@@ -9,6 +9,6 @@ namespace EasyTravel.Solution.Contracts.Interfaces
 {
     public  interface IAuthenticationService
     {
-        Task<AuthenticationResponseDto> GetTokenAsync(string apiKey, string apiSecret);
+        Task<AuthenticationResponseDto> GetTokenAsync();
     }
 }

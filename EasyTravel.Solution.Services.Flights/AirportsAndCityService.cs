@@ -43,7 +43,7 @@ namespace EasyTravel.Solution.Services
 
         public async Task SetLocationToMemoryCacheAsync()
         {
-            var token = await _authenticationService.GetTokenAsync("ckUD88UAsGlU5o2J6EFT3zhnMFN0OfKa", "if5MXVly3Fp4Tqfx");
+            var token = await _authenticationService.GetTokenAsync();
             if (token != null)
             {
                 List<AmadeusLocationInfoResponseDto> allLocations = new();

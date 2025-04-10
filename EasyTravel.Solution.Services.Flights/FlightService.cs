@@ -5,6 +5,7 @@ using EasyTravel.Solution.Contracts.Contracts.Flights.AmadeusModels;
 using EasyTravel.Solution.Contracts.Contracts.Flights.Responses;
 using EasyTravel.Solution.ThirdPartyConnections.Contracts;
 using AutoMapper;
+using EasyTravel.Solution.Contracts.Contracts.Authentication;
 
 namespace EasyTravel.Solution.Services
 {
@@ -23,12 +24,12 @@ namespace EasyTravel.Solution.Services
             _mapper = mapper;
             _airportsAndCityService = airportsAndCityService;
         }
-        
+
         public async Task<FlightOfferResponseDto> GetFlights(FlightRequestDto flightRequestDto)
         {
             try
             {
-                var token = await _authenticationService.GetTokenAsync("ckUD88UAsGlU5o2J6EFT3zhnMFN0OfKa", "if5MXVly3Fp4Tqfx");
+                var token = await _authenticationService.GetTokenAsync();
                 var locations = await _airportsAndCityService.GetLocationsAsync();
                 var request = GetFlightSearchRequest(flightRequestDto);
                 var jsonResponse = await _apiProxy.PostAsync("https://test.api.amadeus.com/v2/shopping/flight-offers", token.AccessToken, request);
@@ -52,7 +53,6 @@ namespace EasyTravel.Solution.Services
         
         public async Task<FlightDestinationsFromOriginResponseDto> GetFlightsOffersFromOrigin(string origin, DateTime? departureDate, int? travelDays, decimal? maxPrice)
         {
-            var token = await _authenticationService.GetTokenAsync("ckUD88UAsGlU5o2J6EFT3zhnMFN0OfKa", "if5MXVly3Fp4Tqfx");
             var departureDateStr = departureDate != null ? departureDate.Value.ToString("yyyy-MM-dd") : "";
             var travelDayStr = travelDays != null ? travelDays.Value.ToString() : "";
             var maxPriceStr = maxPrice != null ? maxPrice.Value.ToString() : "";
@@ -63,10 +63,9 @@ namespace EasyTravel.Solution.Services
                 { "departureDate", departureDateStr },
                 { "duration", travelDayStr},
                 { "maxPrice", maxPriceStr },
-             };
-
+            };
             string apiUrl = "https://test.api.amadeus.com/v1/shopping/flight-destinations";
-
+            var token = await _authenticationService.GetTokenAsync();
             var jsonResponse = await _apiProxy.GetAsync(apiUrl, token.AccessToken, queryParams);
             var result = new FlightDestinationsFromOriginResponseDto { };
             try
