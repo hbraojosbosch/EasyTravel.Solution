@@ -5,12 +5,14 @@ namespace EasyTravel.Solution.AirportsAndCities.Worker
     public class AirportsAndCitiesLoderWorker : BackgroundService
     {
         private readonly ILogger<AirportsAndCitiesLoderWorker> _logger;
-        private readonly IAirportsAndCityService _airportsAndCityService;
+        private readonly IServiceProvider _serviceProvider;
 
-        public AirportsAndCitiesLoderWorker(ILogger<AirportsAndCitiesLoderWorker> logger, IAirportsAndCityService airportsAndCityService)
+
+        public AirportsAndCitiesLoderWorker(ILogger<AirportsAndCitiesLoderWorker> logger,
+                                            IServiceProvider serviceProvider)
         {
             _logger = logger;
-            _airportsAndCityService = airportsAndCityService;
+            _serviceProvider = serviceProvider;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -19,6 +21,8 @@ namespace EasyTravel.Solution.AirportsAndCities.Worker
             {
                 try
                 {
+                    using var scope = _serviceProvider.CreateScope();
+                    var _airportsAndCityService = scope.ServiceProvider.GetRequiredService<IAirportsAndCityService>();
                     await _airportsAndCityService.SetLocationToMemoryCacheAsync();
                 }
                 catch (Exception ex)
@@ -27,7 +31,7 @@ namespace EasyTravel.Solution.AirportsAndCities.Worker
                 }
 
                 var nextRun = GetNextRunTime();
-                var delay = nextRun - DateTimeOffset.Now;
+                var delay = nextRun - DateTimeOffset.UtcNow;
 
                 _logger.LogInformation("Next run scheduled at: {NextRun}", nextRun);
                 await Task.Delay(delay, stoppingToken);
@@ -35,11 +39,11 @@ namespace EasyTravel.Solution.AirportsAndCities.Worker
         }
         private DateTimeOffset GetNextRunTime()
         {
-            var now = DateTimeOffset.Now;
-            var next = now.Date.AddDays(7 - (int)now.DayOfWeek + (int)DayOfWeek.Monday).AddHours(2); // Next Monday at 2 AM
+            var now = DateTimeOffset.UtcNow;
+            var next = now.Date.AddMinutes(3);  
             if (next <= now)
             {
-                next = next.AddDays(7);
+                next = next.AddMinutes(3);
             }
             return next;
         }

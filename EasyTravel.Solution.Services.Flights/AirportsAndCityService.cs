@@ -17,48 +17,27 @@ namespace EasyTravel.Solution.Services
     public class AirportsAndCityService : IAirportsAndCityService
     {
         private IAuthenticationService _authenticationService;
-        private readonly IApiProxy _apiProxy;
-        private readonly IMapper _mapper;
         private readonly HttpClient _httpClient;
         private readonly ICacheService _cacheService;
 
         public AirportsAndCityService(HttpClient httpClient, IAuthenticationService authenticationService,
-                                      IApiProxy apiProxy, IMapper mapper, ICacheService cacheService)
+                                      ICacheService cacheService)
         {
             _httpClient = httpClient;
             _authenticationService = authenticationService;
-            _apiProxy = apiProxy;
-            _mapper = mapper;
             _cacheService = cacheService;
         }
 
-        public async Task<List<AmadeusLocationInfoResponseDto>> GetLocationsAsync(string token)
+        public async Task<List<AmadeusLocationInfoResponseDto>> GetLocationsAsync()
         {
             List<AmadeusLocationInfoResponseDto> allLocations = new();
-            foreach (char letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ")
-            {
-                int limit = 100;
-                int offset = 0;
-                bool moreData = true;
-                while (moreData)
-                {
-
-                    var locations = await GetLocations(letter.ToString(), token, limit, offset);
-
-                    if (locations?.Data?.Any() != true)
-                    {
-                        moreData = false;
-                        break;
-                    }
-                    allLocations.Add(locations);
-
-                    offset += limit;
-                    await Task.Delay(100); // Avoid rate limits
-                }
-
-            }
 
             var cachedValues = await _cacheService.GetValueAsync("AmadeusLocations");
+            if (!string.IsNullOrWhiteSpace(cachedValues))
+            {
+                allLocations = JsonSerializer.Deserialize<List<AmadeusLocationInfoResponseDto>>(cachedValues);
+            }
+
             return allLocations;
         }
 
@@ -67,6 +46,26 @@ namespace EasyTravel.Solution.Services
             var token = await _authenticationService.GetTokenAsync("ckUD88UAsGlU5o2J6EFT3zhnMFN0OfKa", "if5MXVly3Fp4Tqfx");
             if (token != null)
             {
+                List<AmadeusLocationInfoResponseDto> allLocations = new();
+                foreach (char letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+                {
+                    int limit = 100;
+                    int offset = 0;
+                    bool moreData = true;
+                    while (moreData)
+                    {
+                        var locations = await GetLocations(letter.ToString(), token.AccessToken, limit, offset);
+                        if (locations?.Data?.Any() != true)
+                        {
+                            moreData = false;
+                            break;
+                        }
+                        allLocations.Add(locations);
+
+                        offset += limit;
+                        await Task.Delay(100); // Avoid rate limits
+                    }
+                }
                 var serializedLocations = JsonSerializer.Serialize(allLocations);
                 await _cacheService.SetValueAsync("AmadeusLocations", serializedLocations);
             }
@@ -75,8 +74,6 @@ namespace EasyTravel.Solution.Services
         private async Task<AmadeusLocationInfoResponseDto> GetLocations(string keyword, string token, int limit, int offset)
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-
-            string url = $"https://test.api.amadeus.com/v1/reference-data/locations?subType=CITY,AIRPORT&keyword={keyword}";
             string url1 = $"https://test.api.amadeus.com/v1/reference-data/locations?subType=AIRPORT&keyword={keyword}&page[limit]={limit}&page[offset]={offset}";
             var response = await _httpClient.GetAsync(url1);
             if (!response.IsSuccessStatusCode)
